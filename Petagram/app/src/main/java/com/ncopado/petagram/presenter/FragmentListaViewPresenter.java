@@ -33,6 +33,7 @@ public class FragmentListaViewPresenter implements  IFragmentListaViewPresenter 
     public String userId="";
 
 
+
     public FragmentListaViewPresenter(IFragmentLista iFragmentLista, Context context) {
         this.iFragmentLista=iFragmentLista;
         this.context=context;
@@ -40,6 +41,9 @@ public class FragmentListaViewPresenter implements  IFragmentListaViewPresenter 
 
         getPets();
         getMediaRecent();
+
+
+        
 
     }
 

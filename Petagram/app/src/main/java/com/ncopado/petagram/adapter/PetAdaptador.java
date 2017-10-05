@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.ncopado.petagram.db.PetRepository;
 import com.ncopado.petagram.pojo.Pet;
 import com.ncopado.petagram.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
     public PetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if(type==1){
-             view= LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_list,parent,false);
+             view= LayoutInflater.from(parent.getContext()).inflate(R.layout.pet_list_api,parent,false);
         }
         else
         {
@@ -67,7 +68,7 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
 
         final  Pet pet=lstPet.get(position);
 
-        holder.petPhoto.setImageResource(pet.getPhoto());
+        /*holder.petPhoto.setImageResource(pet.getPhoto());
 
 
         if(type==1) {
@@ -94,6 +95,15 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
 
 
         holder.tvRating.setText( Integer.toString(  pet.getReiting()));
+        */
+
+        Picasso.with(activity)
+                .load(pet.getUrlPhoto())
+                .placeholder(R.drawable.icons8_dog_bone_48color)
+                .into(holder.petPhoto);
+
+
+        holder.tvRating.setText( Integer.toString(  pet.getReiting()));
 
 
 
@@ -117,11 +127,8 @@ public class PetAdaptador extends RecyclerView.Adapter<PetAdaptador.PetViewHolde
 
             petPhoto=(ImageView) itemView.findViewById(R.id.petphoto);
 
-            if(type==1) {
-                tvName = (TextView) itemView.findViewById(R.id.tvNamePet);
-                btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
-            }
-            tvRating=(TextView) itemView.findViewById(R.id.tvReting);
+
+            tvRating=(TextView) itemView.findViewById(R.id.tvlikes);
 
         }
     }

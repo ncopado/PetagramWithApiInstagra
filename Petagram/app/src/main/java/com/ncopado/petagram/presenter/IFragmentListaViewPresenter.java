@@ -10,5 +10,9 @@ public interface IFragmentListaViewPresenter {
 
     public  void ShowPets();
 
+    void  showData();
+
+    void  getMediaRecent();
+
 
 }

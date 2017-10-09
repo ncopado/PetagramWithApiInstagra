@@ -21,8 +21,18 @@
     <item
         android:id="@+id/mConfigAcount"
         android:title="@string/mConfigAcount"
-        android:orderInCategory="103"
+        android:orderInCategory="104"
+        ></item>
+
+
+    <item
+        android:id="@+id/mNotificaciones"
+        android:title="@string/mNotificaciones"
+        android:orderInCategory="105"
+
+
         >
+
     </item>
 
     <item

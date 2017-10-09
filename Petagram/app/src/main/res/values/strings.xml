@@ -7,4 +7,5 @@
     <string name="txtname">Nombre</string>
     <string name="txtemail">Email</string>
     <string name="txtmessage">Mensaje</string>
+    <string name="mNotificaciones">Recibir Notificaciones</string>
 </resources>

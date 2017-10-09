@@ -42,6 +42,12 @@ public class ConstantRestApi {
     }
 
 
+    //root my server
+    public static final String ROOT_URL_MYAPI="https://gentle-thicket-56327.herokuapp.com/";
+    public  static  final  String KEY_POST_ID_TOKEN="registrar-usuario";
+
+
+
 
 
 }

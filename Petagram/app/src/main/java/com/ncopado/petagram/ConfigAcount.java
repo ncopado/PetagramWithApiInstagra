@@ -9,13 +9,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.ncopado.petagram.db.PetRepository;
 import com.ncopado.petagram.pojo.Pet;
 import com.ncopado.petagram.restApi.ConstantRestApi;
 import com.ncopado.petagram.restApi.EndPointApi;
 import com.ncopado.petagram.restApi.Model.PetResponse;
+import com.ncopado.petagram.restApi.Model.UsuarioResponse;
 import com.ncopado.petagram.restApi.adapter.RestApiAdapter;
+import com.ncopado.petagram.restApi.adapter.UsuarioRestApiAdapter;
 
 import java.util.ArrayList;
 
@@ -60,6 +63,33 @@ public class ConfigAcount extends AppCompatActivity {
 
 
 
+
+
+    }
+
+
+    public void enviarTokenRegistro(String token,String id){
+
+        UsuarioRestApiAdapter restApiAdapter=new UsuarioRestApiAdapter();
+        EndPointApi endpoints=restApiAdapter.establecerConexionRestApi();
+        Call<UsuarioResponse> usuarioResponseCall=endpoints.registroTokenID(token,id);
+
+        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
+            @Override
+            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
+                UsuarioResponse usuarioResponse=response.body();
+                Log.d("ID FIREBASE",usuarioResponse.getInstagramId());
+                Log.d("TOKEN FIREBASE",usuarioResponse.getToken());
+
+            }
+
+            @Override
+            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 
@@ -83,6 +113,9 @@ public class ConfigAcount extends AppCompatActivity {
 
                 PetRepository petRepository = new PetRepository(context);
                 petRepository.insertUserId(id);
+
+                String  token = FirebaseInstanceId.getInstance().getToken();
+                enviarTokenRegistro(token,id);
 
 
             }

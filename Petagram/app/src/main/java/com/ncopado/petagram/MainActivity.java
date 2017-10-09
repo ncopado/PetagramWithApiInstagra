@@ -9,15 +9,24 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ncopado.petagram.adapter.PageAdapter;
 import com.ncopado.petagram.db.PetRepository;
 import com.ncopado.petagram.fragment.FragmentLista;
 import com.ncopado.petagram.fragment.FragmentProfile;
+import com.ncopado.petagram.restApi.EndPointApi;
+import com.ncopado.petagram.restApi.Model.UsuarioResponse;
+import com.ncopado.petagram.restApi.adapter.UsuarioRestApiAdapter;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentConfigAcount=new Intent(this,ConfigAcount.class);
                 startActivity(intentConfigAcount);
                 break;
+            case R.id.mNotificaciones:
+                PetRepository petRepository=new PetRepository(this);
+                String id=petRepository.getUserIdInstagram();
+
+                enviarTokenRegistro(NotificationIDTokenService.GetIDDevices(),id);
+
+                break;
+
+
 
         }
 
@@ -106,4 +124,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    public  void enviarTokenRegistro(String token,String id) {
+
+        UsuarioRestApiAdapter restApiAdapter=new UsuarioRestApiAdapter();
+        EndPointApi endpoints=restApiAdapter.establecerConexionRestApi();
+        Call<UsuarioResponse> usuarioResponseCall=endpoints.registroTokenID(token,id);
+
+        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
+            @Override
+            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
+                UsuarioResponse usuarioResponse=response.body();
+                Log.d("ID FIREBASE",usuarioResponse.getInstagramId());
+                Log.d("TOKEN FIREBASE",usuarioResponse.getToken());
+
+
+
+                Toast.makeText(MainActivity.this, "Se guardo el Device y el Usuario con exito", Toast.LENGTH_SHORT)
+                        .show();
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
+
+            }
+        });
+
+
+
+    }
 }
